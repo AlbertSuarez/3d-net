@@ -17,6 +17,7 @@ def parse_args():
     parser.add_argument('--downloaded_folder', type=str, default=DATASET_FOLDER_DOWNLOADED)
     parser.add_argument('--standardized_folder', type=str, default=DATASET_FOLDER_STANDARDIZED)
     parser.add_argument('--training_factor', type=float, default=0.95, choices=(0.0, 0.95))
+    parser.add_argument('--max_folders', type=int, default=0)
     return parser.parse_args()
 
 
@@ -35,7 +36,7 @@ def _validate_output(standardized_folder):
     return training_folder, validation_folder
 
 
-def _standardize(downloaded_folder, training_folder, validation_folder, training_factor):
+def _standardize(downloaded_folder, training_folder, validation_folder, training_factor, max_folders):
     valid_extensions = ('.stl', '.STL')
     folder_list = os.listdir(downloaded_folder)
     for category_folder in tqdm(folder_list, total=len(folder_list), desc='Categories'):
@@ -44,6 +45,8 @@ def _standardize(downloaded_folder, training_folder, validation_folder, training
         downloaded_category = os.path.join(downloaded_folder, category_folder)
         if os.path.isdir(downloaded_category):
             category_list = os.listdir(downloaded_category)
+            if max_folders > 0:
+                category_list = category_list[:max_folders]
             for zip_path in tqdm(category_list, total=len(category_list), desc='Files'):
                 try:
                     with zipfile.ZipFile(os.path.join(downloaded_category, zip_path)) as zip_file:
@@ -83,13 +86,13 @@ def _count(training_folder, validation_folder):
         log.info('total: {} examples'.format(total))
 
 
-def main(downloaded_folder, standardized_folder, training_factor):
+def main(downloaded_folder, standardized_folder, training_factor, max_folders):
     _validate_input(downloaded_folder)
     training_folder, validation_folder = _validate_output(standardized_folder)
-    _standardize(downloaded_folder, training_folder, validation_folder, training_factor)
+    _standardize(downloaded_folder, training_folder, validation_folder, training_factor, max_folders)
     _count(training_folder, validation_folder)
 
 
 if __name__ == '__main__':
     args = parse_args()
-    main(args.downloaded_folder, args.standardized_folder, args.training_factor)
+    main(args.downloaded_folder, args.standardized_folder, args.training_factor, args.max_folders)
