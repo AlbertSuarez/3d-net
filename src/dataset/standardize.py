@@ -16,14 +16,16 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--downloaded_folder', type=str, default=DATASET_FOLDER_DOWNLOADED)
     parser.add_argument('--standardized_folder', type=str, default=DATASET_FOLDER_STANDARDIZED)
-    parser.add_argument('--training_factor', type=float, default=0.95, choices=(0.0, 0.95))
+    parser.add_argument('--training_factor', type=float, default=0.95)
     parser.add_argument('--max_folders', type=int, default=0)
     return parser.parse_args()
 
 
-def _validate_input(downloaded_folder):
+def _validate_input(downloaded_folder, training_factor):
     if not os.path.isdir(downloaded_folder) or len(glob.glob(f'{downloaded_folder}/*/')) != len(DATASET_CATEGORIES):
         raise ValueError('Input folder not valid.')
+    if not (0.0 <= training_factor <= 0.95):
+        raise ValueError('Invalid training factor.')
 
 
 def _validate_output(standardized_folder):
@@ -87,7 +89,7 @@ def _count(training_folder, validation_folder):
 
 
 def main(downloaded_folder, standardized_folder, training_factor, max_folders):
-    _validate_input(downloaded_folder)
+    _validate_input(downloaded_folder, training_factor)
     training_folder, validation_folder = _validate_output(standardized_folder)
     _standardize(downloaded_folder, training_folder, validation_folder, training_factor, max_folders)
     _count(training_folder, validation_folder)
