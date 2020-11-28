@@ -127,3 +127,15 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# IDE
+.idea
+.vs
+.vscode
+
+# Mac
+.DS_Store
+
+# Data
+data/
+!data/.gitkeep
