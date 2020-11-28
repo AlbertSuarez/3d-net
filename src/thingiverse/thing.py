@@ -4,7 +4,7 @@ import requests
 from tqdm import tqdm
 
 from src.config import THINGIVERSE_API_NUMBER_PAGES, DATASET_CATEGORIES, THINGIVERSE_API_SEARCH, \
-    THINGIVERSE_API_PACKAGE, DATASET_FOLDER_DOWNLOADED, DATASET_DOWNLOAD_CHUNK_SIZE, THINGIVERSE_API_PER_PAGE
+    THINGIVERSE_API_PACKAGE, DATASET_FOLDER_DOWNLOADED, THINGIVERSE_API_PER_PAGE, REQUEST_TIMEOUT
 from src.helper import log, request
 
 
@@ -32,9 +32,8 @@ def download_models(access_token):
                             try:
                                 zip_path = os.path.join(category_folder, f'{category_id}__{thing_id}.zip')
                                 if not os.path.isfile(zip_path):
-                                    response = requests.get(package_url, stream=True)
+                                    response = requests.get(package_url, timeout=REQUEST_TIMEOUT)
                                     with open(zip_path, 'wb') as fd:
-                                        for chunk in response.iter_content(chunk_size=DATASET_DOWNLOAD_CHUNK_SIZE):
-                                            fd.write(chunk)
+                                        fd.write(response.content)
                             except Exception as e:
                                 log.warn(f'Error downloading thing {thing_id} | {package_url}: {e}')

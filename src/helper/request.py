@@ -1,6 +1,7 @@
 import time
 import requests
 
+from src.config import REQUEST_TIMEOUT
 from src.helper import log
 
 
@@ -10,7 +11,7 @@ def execute(method, url, params=None):
         return None
     for it in range(1, 4):
         try:
-            response = requests.request(method=method, url=url, params=params, timeout=15)
+            response = requests.request(method=method, url=url, params=params, timeout=REQUEST_TIMEOUT)
             if response is not None and response.ok:
                 return response.json()
             else:
