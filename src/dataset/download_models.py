@@ -11,7 +11,7 @@ from src.thingiverse import launcher
 
 def main():
     if not os.path.isfile('.env'):
-        log.error(f'Environment file (.env) could not be found.')
+        log.error('Environment file (.env) could not be found.')
         return
 
     log.info(f'Spinning up local API for extracting Thingiverse Thing IDs at port {THINGIVERSE_FLASK_PORT}.')
