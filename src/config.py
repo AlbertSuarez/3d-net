@@ -1,16 +1,22 @@
+import math
 import os
 
 
 THINGIVERSE_FLASK_PORT = 8080
 THINGIVERSE_FLASK_WAIT_PRE = 3
-THINGIVERSE_FLASK_WAIT_POST = 60
-THINGIVERSE_FLASK_ENDPOINT = '/latest_things'
-THINGIVERSE_API_ENDPOINT_AUTH = 'https://www.thingiverse.com/login/oauth/authorize'
-THINGIVERSE_API_ENDPOINT_TOKEN = 'https://www.thingiverse.com/login/oauth/access_token'
+THINGIVERSE_FLASK_WAIT_POST = math.inf
+THINGIVERSE_FLASK_ENDPOINT = '/download'
+THINGIVERSE_API_NUMBER_PAGES = 1000
+THINGIVERSE_API_PER_PAGE = 10
+THINGIVERSE_API_AUTH = 'https://www.thingiverse.com/login/oauth/authorize'
+THINGIVERSE_API_TOKEN = 'https://www.thingiverse.com/login/oauth/access_token'
 THINGIVERSE_API_DONE = 'https://asuarez.dev/3d-net/docs/images/done.jpeg'
+THINGIVERSE_API_PACKAGE = 'https://api.thingiverse.com/things/{}/package-url'
+THINGIVERSE_API_SEARCH = 'https://api.thingiverse.com/search/' \
+                         '?page={}&per_page={}&sort=popular&category_id={}&type=things'
 
 DATASET_FOLDER = 'data'
-DATASET_FILE_IDS = os.path.join(DATASET_FOLDER, 'thingiverse_ids.csv')
+DATASET_FOLDER_DOWNLOADED = os.path.join(DATASET_FOLDER, 'downloaded')
 DATASET_CATEGORIES = {
     '3d__printer_accessories': {'category_id': 127, 'main_category': '3d'},
     '3d__printer_extruders': {'category_id': 152, 'main_category': '3d'},
@@ -79,3 +85,4 @@ DATASET_CATEGORIES = {
     'toys__puzzles': {'category_id': 125, 'main_category': 'toys'},
     'toys__accessories': {'category_id': 149, 'main_category': 'toys'}
 }
+DATASET_DOWNLOAD_CHUNK_SIZE = 128
