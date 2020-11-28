@@ -1,3 +1,16 @@
+import os
+
+
+THINGIVERSE_FLASK_PORT = 8080
+THINGIVERSE_FLASK_WAIT_PRE = 3
+THINGIVERSE_FLASK_WAIT_POST = 60
+THINGIVERSE_FLASK_ENDPOINT = '/latest_things'
+THINGIVERSE_API_ENDPOINT_AUTH = 'https://www.thingiverse.com/login/oauth/authorize'
+THINGIVERSE_API_ENDPOINT_TOKEN = 'https://www.thingiverse.com/login/oauth/access_token'
+THINGIVERSE_API_DONE = 'https://asuarez.dev/3d-net/docs/images/done.jpeg'
+
+DATASET_FOLDER = 'data'
+DATASET_FILE_IDS = os.path.join(DATASET_FOLDER, 'thingiverse_ids.csv')
 DATASET_CATEGORIES = {
     '3d__printer_accessories': {'category_id': 127, 'main_category': '3d'},
     '3d__printer_extruders': {'category_id': 152, 'main_category': '3d'},
