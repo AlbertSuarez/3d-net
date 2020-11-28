@@ -3,3 +3,6 @@ requests
 Flask
 Flask-Cors
 python-dotenv
+tensorflow
+numpy
+numpy-stl
