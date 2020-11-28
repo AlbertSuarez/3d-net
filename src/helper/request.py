@@ -10,7 +10,7 @@ def execute(method, url, params=None):
         return None
     for it in range(1, 4):
         try:
-            response = requests.request(method=method, url=url, params=params)
+            response = requests.request(method=method, url=url, params=params, timeout=15)
             if response is not None and response.ok:
                 return response.json()
             else:
