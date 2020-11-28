@@ -19,6 +19,9 @@ THINGIVERSE_API_SEARCH = 'https://api.thingiverse.com/search/' \
 
 DATASET_FOLDER = 'data'
 DATASET_FOLDER_DOWNLOADED = os.path.join(DATASET_FOLDER, 'downloaded')
+DATASET_FOLDER_STANDARDIZED = os.path.join(DATASET_FOLDER, 'standardized')
+DATASET_SUB_FOLDER_TRAINING = 'training'
+DATASET_SUB_FOLDER_VALIDATION = 'validation'
 DATASET_CATEGORIES = {
     '3d__printer_accessories': {'category_id': 127, 'main_category': '3d'},
     '3d__printer_extruders': {'category_id': 152, 'main_category': '3d'},
