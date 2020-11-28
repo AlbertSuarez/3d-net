@@ -40,38 +40,37 @@ def _validate_output(standardized_folder):
 
 def _standardize(downloaded_folder, training_folder, validation_folder, training_factor, max_folders):
     valid_extensions = ('.stl', '.STL')
-    folder_list = os.listdir(downloaded_folder)
+    folder_list = [d for d in os.listdir(downloaded_folder) if os.path.isdir(os.path.join(downloaded_folder, d))]
     for category_folder in tqdm(folder_list, total=len(folder_list), desc='Categories'):
         os.makedirs(os.path.join(training_folder, category_folder))
         os.makedirs(os.path.join(validation_folder, category_folder))
         downloaded_category = os.path.join(downloaded_folder, category_folder)
-        if os.path.isdir(downloaded_category):
-            category_list = os.listdir(downloaded_category)
-            if max_folders > 0:
-                category_list = category_list[:max_folders]
-            for zip_path in tqdm(category_list, total=len(category_list), desc='Files'):
-                try:
-                    with zipfile.ZipFile(os.path.join(downloaded_category, zip_path)) as zip_file:
-                        for zip_info in zip_file.infolist():
-                            if zip_info.filename.endswith(valid_extensions):
-                                zip_info.filename = os.path.basename(zip_info.filename).lower()
-                                zip_file.extract(
-                                    zip_info, os.path.join(
-                                        training_folder, category_folder,
-                                        os.path.splitext(
-                                            os.path.basename(os.path.join(downloaded_category, zip_path))
-                                        )[0]
-                                    )
+        category_list = os.listdir(downloaded_category)
+        if max_folders > 0:
+            category_list = category_list[:max_folders]
+        for zip_path in tqdm(category_list, total=len(category_list), desc='Files'):
+            try:
+                with zipfile.ZipFile(os.path.join(downloaded_category, zip_path)) as zip_file:
+                    for zip_info in zip_file.infolist():
+                        if zip_info.filename.endswith(valid_extensions):
+                            zip_info.filename = os.path.basename(zip_info.filename).lower()
+                            zip_file.extract(
+                                zip_info, os.path.join(
+                                    training_folder, category_folder,
+                                    os.path.splitext(
+                                        os.path.basename(os.path.join(downloaded_category, zip_path))
+                                    )[0]
                                 )
-                except Exception as e:
-                    log.debug(f'Error extracting {zip_path}: [{e}]')
-            all_items_folder = os.path.join(training_folder, category_folder)
-            all_items = [
-                os.path.join(all_items_folder, d) for d in os.listdir(all_items_folder)
-                if os.path.isdir(os.path.join(all_items_folder, d))
-            ]
-            for f in random.sample(all_items, int(len(all_items) * (1 - training_factor))):
-                shutil.move(f, os.path.join(validation_folder, category_folder, os.path.basename(f)))
+                            )
+            except Exception as e:
+                log.debug(f'Error extracting {zip_path}: [{e}]')
+        all_items_folder = os.path.join(training_folder, category_folder)
+        all_items = [
+            os.path.join(all_items_folder, d) for d in os.listdir(all_items_folder)
+            if os.path.isdir(os.path.join(all_items_folder, d))
+        ]
+        for f in random.sample(all_items, int(len(all_items) * (1 - training_factor))):
+            shutil.move(f, os.path.join(validation_folder, category_folder, os.path.basename(f)))
 
 
 def _count(training_folder, validation_folder):
