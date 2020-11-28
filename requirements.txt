@@ -1,4 +1,5 @@
 tqdm
-requests[socks]
-beautifulsoup4
-fake_useragent
+requests
+Flask
+Flask-Cors
+python-dotenv
