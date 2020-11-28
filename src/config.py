@@ -86,4 +86,4 @@ DATASET_CATEGORIES = {
     'toys__puzzles': {'category_id': 125, 'main_category': 'toys'},
     'toys__accessories': {'category_id': 149, 'main_category': 'toys'}
 }
-DATASET_DOWNLOAD_CHUNK_SIZE = 128
+DATASET_DOWNLOAD_CHUNK_SIZE = 1024
