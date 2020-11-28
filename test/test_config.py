@@ -1,12 +1,16 @@
+import os
 import unittest
 
-from src.config import DATASET_CATEGORIES
+from src.config import DATASET_FOLDER, DATASET_CATEGORIES
 
 
 class ConfigTest(unittest.TestCase):
 
     def setUp(self):
         pass
+
+    def test_existence(self):
+        self.assertTrue(os.path.isdir(DATASET_FOLDER))
 
     def test_categories(self):
         self.assertEqual(len(DATASET_CATEGORIES.keys()), len(set(DATASET_CATEGORIES.keys())))
