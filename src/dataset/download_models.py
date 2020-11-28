@@ -27,7 +27,7 @@ def main():
         log.info('Killing processes.')
         process.terminate()
     else:
-        log.info('Processing forever.')
+        log.debug('Processing forever.')
 
 
 if __name__ == '__main__':

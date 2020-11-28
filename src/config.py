@@ -1,4 +1,3 @@
-import math
 import os
 
 
@@ -8,7 +7,9 @@ THINGIVERSE_FLASK_WAIT_POST = 300
 THINGIVERSE_FLASK_WAIT_ENABLE = False
 THINGIVERSE_FLASK_ENDPOINT = '/download'
 THINGIVERSE_API_NUMBER_PAGES = 1000
-THINGIVERSE_API_PER_PAGE = 10
+THINGIVERSE_API_PER_PAGE = 500
+THINGIVERSE_API_CONCURRENCY = 10
+THINGIVERSE_API_CONCURRENCY_DOWNLOAD = 50
 THINGIVERSE_API_AUTH = 'https://www.thingiverse.com/login/oauth/authorize'
 THINGIVERSE_API_TOKEN = 'https://www.thingiverse.com/login/oauth/access_token'
 THINGIVERSE_API_DONE = 'https://asuarez.dev/3d-net/docs/images/done.jpeg'
@@ -87,4 +88,4 @@ DATASET_CATEGORIES = {
     'toys__accessories': {'category_id': 149, 'main_category': 'toys'}
 }
 
-REQUEST_TIMEOUT = 15
+REQUEST_TIMEOUT = 30

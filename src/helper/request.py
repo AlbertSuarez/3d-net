@@ -15,8 +15,12 @@ def execute(method, url, params=None):
             if response is not None and response.ok:
                 return response.json()
             else:
-                raise Exception(f'Problem requesting URL {url}. Number of tries: {it}')
+                raise Exception(
+                    f'Problem requesting URL {url}: '
+                    f'[{response.status_code if response is not None else None}]. Number of tries: {it}'
+                )
         except Exception as e:
-            log.exception(e)
             time.sleep(it)
+            if it >= 3:
+                log.debug(f'Error: {e}')
     return None
