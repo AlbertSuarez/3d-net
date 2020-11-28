@@ -1,1 +1,4 @@
 tqdm
+requests[socks]
+beautifulsoup4
+fake_useragent
