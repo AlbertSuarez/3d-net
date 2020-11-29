@@ -14,14 +14,15 @@ def parse_args():
     parser.add_argument('--weights_folder', type=str, default=DATASET_FOLDER_WEIGHTS)
     parser.add_argument('--validation_h5', type=str,
                         default=os.path.join(DATASET_FOLDER_PREPROCESSED, f'{DATASET_SUB_FOLDER_VALIDATION}.h5'))
+    parser.add_argument('--cut', type=int, default=0)
     return parser.parse_args()
 
 
-def main(weights_name, weights_folder, validation_h5):
+def main(weights_name, weights_folder, validation_h5, cut):
     model_path = os.path.join(weights_folder, weights_name, TRAIN_MODEL_FILE)
     assert os.path.isfile(model_path)
 
-    x_train, y_train = loader.load(validation_h5, DATASET_SUB_FOLDER_VALIDATION)
+    x_train, y_train = loader.load(validation_h5, DATASET_SUB_FOLDER_VALIDATION, cut=cut)
     model = tf.keras.models.load_model(model_path)
     model.summary()
     loss, acc = model.evaluate(x_train, y_train, verbose=2)
@@ -30,4 +31,4 @@ def main(weights_name, weights_folder, validation_h5):
 
 if __name__ == '__main__':
     args = parse_args()
-    main(args.weights_name, args.weights_folder, args.validation_h5)
+    main(args.weights_name, args.weights_folder, args.validation_h5, args.cut)
