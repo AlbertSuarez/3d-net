@@ -7,7 +7,7 @@ from datetime import datetime
 from tensorflow.keras.utils import to_categorical
 
 from src.config import DATASET_FOLDER_PREPROCESSED, DATASET_SUB_FOLDER_TRAINING, DATASET_CATEGORIES, \
-    DATASET_FOLDER_WEIGHTS, TRAIN_EPOCHS
+    DATASET_FOLDER_WEIGHTS, TRAIN_EPOCHS, TRAIN_MODEL_FILE
 
 
 def parse_args():
@@ -37,6 +37,7 @@ def main(weights_folder, preprocessed_h5, epochs):
         filepath=weights_folder, save_weights_only=True, verbose=1
     )
     model.fit(x_train, y_train, epochs=epochs, callbacks=[cp_callback])
+    model.save(os.path.join(weights_folder, TRAIN_MODEL_FILE))
 
 
 if __name__ == '__main__':
