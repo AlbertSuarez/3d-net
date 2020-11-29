@@ -143,6 +143,12 @@ I would like to continue the project and try to understand well how STL objects 
 
 <br>
 <p align="center">
+  <img alt="ZIPs" src="docs/screenshots/screenshoot_0_train.png" width="100%"/>
+</p>
+<br>
+
+<br>
+<p align="center">
   <img alt="ZIPs" src="docs/screenshots/screenshoot_1_zips.png" width="100%"/>
 </p>
 <br>
