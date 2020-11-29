@@ -6,3 +6,5 @@ python-dotenv
 tensorflow
 numpy
 numpy-stl
+opencv-python
+h5py
