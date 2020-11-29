@@ -8,7 +8,7 @@ import zipfile
 from tqdm import tqdm
 
 from src.config import DATASET_FOLDER_DOWNLOADED, DATASET_CATEGORIES, DATASET_FOLDER_STANDARDIZED, \
-    DATASET_SUB_FOLDER_TRAINING, DATASET_SUB_FOLDER_VALIDATION
+    DATASET_SUB_FOLDER_TRAINING, DATASET_SUB_FOLDER_VALIDATION, THINGIVERSE_API_PER_PAGE
 from src.helper import log
 
 
@@ -16,8 +16,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--downloaded_folder', type=str, default=DATASET_FOLDER_DOWNLOADED)
     parser.add_argument('--standardized_folder', type=str, default=DATASET_FOLDER_STANDARDIZED)
-    parser.add_argument('--training_factor', type=float, default=0.95)
-    parser.add_argument('--max_folders', type=int, default=0)
+    parser.add_argument('--training_factor', type=float, default=0.90)
+    parser.add_argument('--max_folders', type=int, default=THINGIVERSE_API_PER_PAGE)
     return parser.parse_args()
 
 
