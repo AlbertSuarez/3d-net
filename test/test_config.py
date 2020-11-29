@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from src.config import DATASET_FOLDER, DATASET_CATEGORIES
+from src.config import DATASET_FOLDER, DATASET_CATEGORIES, TRAIN_STRATEGY
 
 
 class ConfigTest(unittest.TestCase):
@@ -22,3 +22,6 @@ class ConfigTest(unittest.TestCase):
             len([v.get('category_id') for v in DATASET_CATEGORIES.values()]),
             len(set([v.get('category_id') for v in DATASET_CATEGORIES.values()]))
         )
+
+    def test_train_strategy(self):
+        self.assertIn(TRAIN_STRATEGY, ('relu', 'sigmoid'))
