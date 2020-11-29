@@ -45,7 +45,7 @@ def main(weights_path, training_h5, validation_h5, epochs, cut):
     model.save_weights(weights_path.format(epoch=0))
 
     cp_callback = tf.keras.callbacks.ModelCheckpoint(
-        filepath=weights_path, save_weights_only=True, verbose=1
+        filepath=weights_path, save_weights_only=False, verbose=1
     )
     model.fit(
         x_train, y_train,
