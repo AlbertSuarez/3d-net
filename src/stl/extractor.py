@@ -20,10 +20,14 @@ def extract_features(stl_file_list):
         thing_features = thing_features.reshape(thing_features.size)  # Flatten audio array
         thing_features = np.random.choice(thing_features, size=amount_values)  # Get the needed amount values
         thing_features = thing_features.reshape(image_dimensions, image_dimensions, 3)  # Reshape to the image shape
-        thing_features = (thing_features - thing_features.min()) * (1 / (thing_features.max() - thing_features.min()) * 255)
+        thing_features = (thing_features - thing_features.min()) * \
+                         (1 / (thing_features.max() - thing_features.min()) * 255)
         thing_features = thing_features.astype('uint8')
 
-        thing_features = cv2.resize(thing_features, (TRAIN_INPUT_SIZE, TRAIN_INPUT_SIZE), interpolation=cv2.INTER_LANCZOS4)
+        thing_features = cv2.resize(
+            thing_features, (TRAIN_INPUT_SIZE, TRAIN_INPUT_SIZE),
+            interpolation=cv2.INTER_LANCZOS4
+        )
         thing_features = thing_features.flatten()
         return thing_features
     except Exception as e:
