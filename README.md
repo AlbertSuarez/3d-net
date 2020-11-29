@@ -139,6 +139,20 @@ Machine Learning, Neural Networks, and/or Deep Learning are not, by far, trivial
 
 I would like to continue the project and try to understand well how STL objects work and then how to train a correct classifier.
 
+## Images
+
+<br>
+<p align="center">
+  <img alt="ZIPs" src="docs/screenshots/screenshoot_1_zips.png" width="100%"/>
+</p>
+<br>
+
+<br>
+<p align="center">
+  <img alt="ZIPs" src="docs/screenshots/screenshoot_2_stls.png" width="100%"/>
+</p>
+<br>
+
 ## Development
 
 ### Requirements
