@@ -1,13 +1,12 @@
 import argparse
 import os
-import h5py
 import tensorflow as tf
 
 from datetime import datetime
-from tensorflow.keras.utils import to_categorical
 
+from src import loader
 from src.config import DATASET_FOLDER_PREPROCESSED, DATASET_SUB_FOLDER_TRAINING, DATASET_CATEGORIES, \
-    DATASET_FOLDER_WEIGHTS, TRAIN_EPOCHS, TRAIN_MODEL_FILE
+    DATASET_FOLDER_WEIGHTS, TRAIN_EPOCHS, TRAIN_MODEL_FILE, TRAIN_INPUT_SIZE, TRAIN_STRATEGY
 
 
 def parse_args():
@@ -23,12 +22,18 @@ def main(weights_folder, preprocessed_h5, epochs):
     weights_folder = os.path.join(weights_folder, datetime.utcnow().strftime('%Y-%m-%d__%H-%M-%S')) + os.sep
     os.makedirs(weights_folder)
 
-    with h5py.File(preprocessed_h5, 'r') as f:
-        x_train = f['x_train'][:].astype('float32') / 255
-        y_train = to_categorical(f['y_train'][:], num_classes=len(DATASET_CATEGORIES))
+    x_train, y_train = loader.load(preprocessed_h5, DATASET_SUB_FOLDER_TRAINING)
 
     model = tf.keras.Sequential()
-    model.add(tf.keras.layers.Dense(len(DATASET_CATEGORIES), activation='sigmoid', input_shape=(x_train.shape[1],)))
+    if TRAIN_STRATEGY == 'relu':
+        model.add(tf.keras.layers.Conv2D(256, (5, 5), activation='relu',
+                                         input_shape=(TRAIN_INPUT_SIZE, TRAIN_INPUT_SIZE, 3)))
+        model.add(tf.keras.layers.MaxPooling2D((2, 2)))
+        model.add(tf.keras.layers.Conv2D(512, (5, 5), activation='relu'))
+        model.add(tf.keras.layers.MaxPooling2D((2, 2)))
+        model.add(tf.keras.layers.Flatten())
+    else:
+        model.add(tf.keras.layers.Dense(len(DATASET_CATEGORIES), activation='sigmoid', input_shape=(x_train.shape[1],)))
     model.add(tf.keras.layers.Dense(len(DATASET_CATEGORIES), activation='softmax'))
 
     model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
